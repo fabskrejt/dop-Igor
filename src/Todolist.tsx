@@ -19,7 +19,7 @@ type PropsType = {
 
 }
 
-export function Todolist(props: PropsType) {
+export function Todolist({tasks, ...props}: PropsType) {
 
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
@@ -48,6 +48,14 @@ export function Todolist(props: PropsType) {
     const onActiveClickHandler = () => props.changeFilter("active", props.todolistID);
     const onCompletedClickHandler = () => props.changeFilter("completed", props.todolistID);
 
+   let tasksForTodolist = tasks
+
+    if (props.filter === "active") {
+        tasksForTodolist = tasks.filter(t => !t.isDone );
+    }
+    if (props.filter === "completed") {
+        tasksForTodolist = tasks.filter(t => t.isDone );
+    }
 
     return <div>
         <h3>{props.title}</h3>
@@ -62,7 +70,7 @@ export function Todolist(props: PropsType) {
         </div>
         <ul>
             {
-                props.tasks.map(t => {
+                tasksForTodolist.map(t => {
                     const onClickHandler = () => props.removeTask(t.id, props.todolistID)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         props.changeTaskStatus(t.id, e.currentTarget.checked, props.todolistID);
