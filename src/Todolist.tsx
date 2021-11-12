@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import {Tasks} from "./Tasks";
+import {Button} from "./components/Button";
 
 export type TaskType = {
     id: string
@@ -44,10 +45,7 @@ export function Todolist({tasks, ...props}: PropsType) {
             addTask();
         }
     }
-
-    const onAllClickHandler = () => props.changeFilter("all", props.todolistID);
-    const onActiveClickHandler = () => props.changeFilter("active", props.todolistID);
-    const onCompletedClickHandler = () => props.changeFilter("completed", props.todolistID);
+    const changeFilterOnClickHandler = (value: FilterValuesType) => props.changeFilter(value, props.todolistID);
 
     let tasksForTodolist = tasks
 
@@ -80,15 +78,22 @@ export function Todolist({tasks, ...props}: PropsType) {
             }
         </ul>
         <div>
-            <button className={props.filter === 'all' ? "active-filter" : ""}
-                    onClick={onAllClickHandler}>All
-            </button>
-            <button className={props.filter === 'active' ? "active-filter" : ""}
-                    onClick={onActiveClickHandler}>Active
-            </button>
-            <button className={props.filter === 'completed' ? "active-filter" : ""}
-                    onClick={onCompletedClickHandler}>Completed
-            </button>
+            <Button name={'all'}
+                    className={props.filter === 'all' ? "active-filter" : ""}
+                    callback={() => changeFilterOnClickHandler('all')}
+                    filter={props.filter}
+            />
+            <Button name={'active'}
+                    className={props.filter === 'active' ? "active-filter" : ""}
+                    callback={() => changeFilterOnClickHandler('active')}
+                    filter={props.filter}
+            />
+            <Button name={'completed'}
+                    className={props.filter === 'completed' ? "active-filter" : ""}
+                    callback={() => changeFilterOnClickHandler('completed')}
+                    filter={props.filter}
+            />
+
         </div>
     </div>
 }
