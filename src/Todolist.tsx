@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import {Tasks} from "./Tasks";
 import {Button} from "./components/Button";
+import {Input} from "./components/Input";
 
 export type TaskType = {
     id: string
@@ -59,11 +60,13 @@ export function Todolist({tasks, ...props}: PropsType) {
     return <div>
         <h3>{props.title}</h3>
         <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
+            <Input
+                title={title}
+                onChangeHandler={onChangeHandler}
+                onKeyPressHandler={onKeyPressHandler}
+                className={error ? "error" : ""}
             />
+
             <button onClick={addTask}>+</button>
             {error && <div className="error-message">{error}</div>}
         </div>
